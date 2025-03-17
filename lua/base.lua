@@ -16,9 +16,20 @@ o.title = true
 o.visualbell=true
 o.showcmd = true
 o.wildmenu = true
+--o.shell = 'C:\Program Files\PowerShell\7\pwsh.exe'
+o.shell = "pwsh.exe"
+o.shellcmdflag = '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command '
+o.shellxquote = ''
+o.shellquote = ''
+o.shellredir = '2>&1 | Out-File -Encoding UTF8 %s'
+o.shellpipe = '2>&1 | Out-File -Encoding UTF8 %s'
+
+vim.wo.foldmethod='expr'
+vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()' 
 --opt.foldmethod = "syntax"
 -- per non creare file di backup
 o.backup = false
+o.swapfile = false
 o.termguicolors = true
 --per copiare sulla clipboard
 o.clipboard = "unnamedplus"

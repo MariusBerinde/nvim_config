@@ -10,7 +10,10 @@ global.maplocalleader = " "
 
 map('n', 'ò', '{', { noremap = true })
 map('n', 'à', '}', { noremap = true })
+map('n', 'ù', '`', { noremap = true })
 
+map('n', ';', ',', { noremap = true })
+map('n', ',', ';', { noremap = true })
 
 -- Mappatura di <leader>e a :e $MYVIMRC<CR> in modalità normale
 map('n', '<leader><F1>', ':e $MYVIMRC<CR>', { noremap = true })
@@ -23,3 +26,5 @@ map('n', '<leader>e', ':Ex', { noremap = true })
 -- Mappatura di <C-Space> a zO in modalità normale
 map('n', '<C-Space>', 'zO', { noremap = true })
 
+-- mappatura per entrare facilmene in normal mode 
+map('t','<C-x>',[[<C-\><C-n>]],{ noremap = true })

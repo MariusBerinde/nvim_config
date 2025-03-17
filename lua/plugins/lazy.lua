@@ -34,9 +34,11 @@ require('lazy').setup({
 {
  'wannesm/wmnusmv.vim'
 },
+
  -- lazy.nvim
-{
-  "folke/noice.nvim",
+ 
+--{
+--[[  "folke/noice.nvim",
   event = "VeryLazy",
   opts = {
     -- add any options here
@@ -48,8 +50,8 @@ require('lazy').setup({
     --   `nvim-notify` is only needed, if you want to use the notification view.
     --   If not available, we use `mini` as the fallback
 --    "rcarriga/nvim-notify",
-    }
-} ,
+    }]]--
+-- } ,
 -- per autopair
 {
     'windwp/nvim-autopairs',
@@ -58,10 +60,92 @@ require('lazy').setup({
     -- use opts = {} for passing setup options
     -- this is equalent to setup({}) function
 },
+-- per todo:
+{
+  "folke/todo-comments.nvim",
+  dependencies = { "nvim-lua/plenary.nvim" },
+  opts = {
+    -- your configuration comes here
+    -- or leave it empty to use the default settings
+    -- refer to the configuration section below
+  }
+},
+-- Mason e LSP
+    {
+        "williamboman/mason.nvim",
+        config = function()
+            require("plugins.lsp").setup()  -- Chiama la funzione setup in lsp.lua
+        end,
+    },
+    {
+        "williamboman/mason-lspconfig.nvim",
+        dependencies = { "williamboman/mason.nvim", "neovim/nvim-lspconfig" },
+    },
+    -- Autocompletamento
+    {
+        "hrsh7th/nvim-cmp",
+        dependencies = {
+            "hrsh7th/cmp-nvim-lsp",
+            "hrsh7th/cmp-buffer",
+            "hrsh7th/cmp-path",
+            "hrsh7th/cmp-cmdline",
+            "L3MON4D3/LuaSnip",  -- Plugin per gli snippet
+        },
+        config = function()
+            require("plugins.cmp").setup()  -- Chiama la funzione setup in cmp.lua
+        end,
+    },
+    -- which-key
+    {
+	    "folke/which-key.nvim",
+	    event = "VeryLazy",
+	    opts = {
+		    -- your configuration comes here
+		    -- or leave it empty to use the default settings
+		    -- refer to the configuration section below
+	    },
+	    keys = {
+		    {
+			    "<leader>?",
+			    function()
+				    require("which-key").show({ global = false })
+			    end,
+			    desc = "Buffer Local Keymaps (which-key)",
+		    },
+	    },
+},
 
+    {
+    'nvim-treesitter/nvim-treesitter',
+    build = ':TSUpdate',
+    config = function()
+      require'nvim-treesitter.configs'.setup {
+        ensure_installed = { "lua", "python", "c", "cpp", "markdown" }, -- Aggiungi altri linguaggi
+        highlight = { enable = true },
+        indent = { enable = true },
+      }
+    end
+  },
 
+{
+  'MeanderingProgrammer/render-markdown.nvim',
+  dependencies = { 'nvim-treesitter/nvim-treesitter' },
+  opts = {
+    latex = {
+      enabled = true,
+      converter = 'pandoc',
+      highlight = 'RenderMarkdownMath',
+      top_pad = 0,
+      bottom_pad = 0,
+    },
+  },
+}
 })
+
 require("plugins.tokyonight")
 require("plugins.telescope")
 require("plugins.lualine")
+--require("plugins.treesitter")
+--require("plugins.lsp")
+--require("plugins.cmp")
 
