@@ -4,21 +4,22 @@ local M = {}
 function M.setup()
     -- Configura Mason
     require("mason").setup()
-    
+
     -- Configura Mason-LSPconfig per installare automaticamente i server LSP
-    require("mason-lspconfig").setup({
-        ensure_installed = { "lua_ls", "pyright", }, -- Specifica i server che vuoi installare
+    local mason_lspconfig = require("mason-lspconfig")
+    mason_lspconfig.setup({
+        ensure_installed = { "lua_ls", "pyright", "jsonls" },
     })
-    
-    -- Configura ogni server LSP
+
+    -- Configura manualmente ogni server LSP
     local lspconfig = require("lspconfig")
-    require("mason-lspconfig").setup_handlers({
-        function(server_name)
-            lspconfig[server_name].setup {
-                capabilities = require("cmp_nvim_lsp").default_capabilities(),
-            }
-        end,
-    })
+    local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+    for _, server_name in ipairs(mason_lspconfig.get_installed_servers()) do
+        lspconfig[server_name].setup({
+            capabilities = capabilities,
+        })
+    end
 end
 
 return M
